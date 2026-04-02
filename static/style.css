@@ -136,9 +136,15 @@ header {
 }
 
 /* SVG map styles */
+.graticule {
+  fill: none;
+  stroke: #1a1a2a;
+  stroke-width: 0.3;
+}
+
 .continent {
-  fill: var(--surface-2);
-  stroke: #3f3f46;
+  fill: #1e1e2e;
+  stroke: #2a2a3a;
   stroke-width: 0.5;
 }
 
