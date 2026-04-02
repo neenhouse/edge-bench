@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EdgeBench — Global Latency Observatory</title>
+  <meta name="description" content="Real-time latency benchmarking across Deno Deploy's 35+ global edge regions." />
+
+  <!-- Favicon: globe with pulse -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2309090b'/><circle cx='16' cy='16' r='10' fill='none' stroke='%2314b8a6' stroke-width='2'/><path d='M6 16 Q16 8 26 16 Q16 24 6 16' fill='none' stroke='%2314b8a6' stroke-width='1.5'/><line x1='16' y1='6' x2='16' y2='26' stroke='%2314b8a6' stroke-width='1.5'/><circle cx='24' cy='10' r='3' fill='%2314b8a6'/><circle cx='24' cy='10' r='5' fill='none' stroke='%2314b8a6' stroke-width='1' opacity='0.5'/></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header>
+      <div>
+        <div class="logo">Edge<span>Bench</span></div>
+        <div class="subtitle">Global Latency Observatory — Deno Deploy</div>
+      </div>
+      <div class="region-badge">
+        <span class="region-dot"></span>
+        Your region: <strong id="region-name">detecting…</strong>
+      </div>
+    </header>
+
+    <!-- World Map -->
+    <section class="map-section">
+      <div class="map-label">Edge Network — 35+ Regions</div>
+      <svg id="world-map" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" aria-label="World map showing Deno Deploy edge regions">
+
+        <!-- Ocean background -->
+        <rect width="1000" height="520" fill="#0f0f12" rx="6"/>
+
+        <!-- Continents (simplified outlines) -->
+
+        <!-- North America -->
+        <path class="continent" d="
+          M 80 80
+          L 130 60
+          L 200 55
+          L 260 65
+          L 290 75
+          L 310 90
+          L 305 110
+          L 280 130
+          L 270 160
+          L 255 185
+          L 240 215
+          L 220 235
+          L 200 255
+          L 185 275
+          L 175 295
+          L 170 315
+          L 180 330
+          L 165 340
+          L 150 330
+          L 140 310
+          L 130 290
+          L 115 270
+          L 100 250
+          L 90 230
+          L 85 200
+          L 75 175
+          L 65 150
+          L 60 120
+          L 65 95
+          Z
+        "/>
+
+        <!-- Greenland -->
+        <path class="continent" d="
+          M 290 30
+          L 340 20
+          L 380 30
+          L 390 55
+          L 370 75
+          L 330 80
+          L 295 65
+          Z
+        "/>
+
+        <!-- South America -->
+        <path class="continent" d="
+          M 190 310
+          L 215 305
+          L 245 310
+          L 260 330
+          L 270 360
+          L 265 395
+          L 250 425
+          L 230 455
+          L 215 475
+          L 205 490
+          L 195 480
+          L 185 460
+          L 175 435
+          L 165 405
+          L 160 370
+          L 165 340
+          L 175 320
+          Z
+        "/>
+
+        <!-- Europe -->
+        <path class="continent" d="
+          M 440 55
+          L 480 45
+          L 520 50
+          L 555 60
+          L 580 75
+          L 590 95
+          L 570 110
+          L 555 125
+          L 545 145
+          L 530 160
+          L 515 155
+          L 500 145
+          L 490 130
+          L 470 120
+          L 455 110
+          L 445 95
+          L 435 80
+          Z
+        "/>
+
+        <!-- Scandinavia bump -->
+        <path class="continent" d="
+          M 480 45
+          L 490 25
+          L 510 20
+          L 525 35
+          L 520 50
+          Z
+        "/>
+
+        <!-- Africa -->
+        <path class="continent" d="
+          M 455 155
+          L 500 145
+          L 545 155
+          L 580 175
+          L 600 205
+          L 605 240
+          L 600 270
+          L 590 300
+          L 575 330
+          L 555 360
+          L 535 385
+          L 515 405
+          L 500 415
+          L 485 405
+          L 465 380
+          L 445 350
+          L 430 315
+          L 420 280
+          L 415 245
+          L 420 210
+          L 435 180
+          Z
+        "/>
+
+        <!-- Asia (main body) -->
+        <path class="continent" d="
+          M 555 55
+          L 610 45
+          L 670 40
+          L 730 42
+          L 790 48
+          L 840 55
+          L 880 65
+          L 910 80
+          L 930 100
+          L 940 125
+          L 935 150
+          L 920 170
+          L 900 185
+          L 875 195
+          L 850 200
+          L 820 205
+          L 790 210
+          L 760 215
+          L 730 220
+          L 700 225
+          L 665 230
+          L 635 235
+          L 610 240
+          L 590 245
+          L 570 240
+          L 555 230
+          L 545 215
+          L 540 195
+          L 545 175
+          L 548 155
+          L 548 135
+          L 545 115
+          L 548 95
+          L 552 75
+          Z
+        "/>
+
+        <!-- Indian subcontinent -->
+        <path class="continent" d="
+          M 645 195
+          L 680 200
+          L 710 215
+          L 720 240
+          L 710 265
+          L 695 285
+          L 675 295
+          L 660 285
+          L 648 265
+          L 640 240
+          L 638 215
+          Z
+        "/>
+
+        <!-- Southeast Asia peninsula -->
+        <path class="continent" d="
+          M 730 215
+          L 755 225
+          L 770 250
+          L 765 275
+          L 750 295
+          L 735 300
+          L 720 290
+          L 715 265
+          L 720 240
+          Z
+        "/>
+
+        <!-- Japan -->
+        <path class="continent" d="
+          M 870 115
+          L 885 105
+          L 900 110
+          L 905 130
+          L 895 148
+          L 875 150
+          L 862 138
+          Z
+        "/>
+
+        <!-- Oceania / Australia -->
+        <path class="continent" d="
+          M 780 320
+          L 825 310
+          L 870 315
+          L 910 330
+          L 935 355
+          L 940 385
+          L 930 410
+          L 905 425
+          L 870 430
+          L 835 425
+          L 805 410
+          L 785 390
+          L 775 365
+          L 775 340
+          Z
+        "/>
+
+        <!-- New Zealand (simplified) -->
+        <path class="continent" d="
+          M 955 385
+          L 965 370
+          L 975 375
+          L 975 395
+          L 960 405
+          Z
+        "/>
+
+        <!-- ── Deno Deploy Region Nodes ── -->
+
+        <!-- US East (Virginia/NYC area) -->
+        <g id="region-us-east">
+          <circle class="region-node" cx="215" cy="140" r="5"/>
+          <circle class="region-pulse" cx="215" cy="140" r="4"/>
+        </g>
+
+        <!-- US West (Oregon/California) -->
+        <g id="region-us-west">
+          <circle class="region-node" cx="95" cy="145" r="5"/>
+          <circle class="region-pulse" cx="95" cy="145" r="4" style="animation-delay: 0.8s"/>
+        </g>
+
+        <!-- US Central -->
+        <g id="region-us-central">
+          <circle class="region-node" cx="162" cy="148" r="4"/>
+        </g>
+
+        <!-- South America (São Paulo) -->
+        <g id="region-sa">
+          <circle class="region-node" cx="230" cy="390" r="5"/>
+          <circle class="region-pulse" cx="230" cy="390" r="4" style="animation-delay: 1.2s"/>
+        </g>
+
+        <!-- Europe West (Frankfurt/Amsterdam/Paris) -->
+        <g id="region-eu-west">
+          <circle class="region-node" cx="490" cy="95" r="5"/>
+          <circle class="region-pulse" cx="490" cy="95" r="4" style="animation-delay: 0.4s"/>
+        </g>
+
+        <!-- Europe North (Stockholm) -->
+        <g id="region-eu-north">
+          <circle class="region-node" cx="505" cy="62" r="4"/>
+        </g>
+
+        <!-- Europe East (Warsaw) -->
+        <g id="region-eu-east">
+          <circle class="region-node" cx="535" cy="95" r="4"/>
+        </g>
+
+        <!-- Middle East (Dubai/Bahrain) -->
+        <g id="region-me">
+          <circle class="region-node" cx="620" cy="175" r="4"/>
+        </g>
+
+        <!-- Africa (Johannesburg) -->
+        <g id="region-af">
+          <circle class="region-node" cx="510" cy="370" r="4"/>
+        </g>
+
+        <!-- Asia Pacific (Singapore) -->
+        <g id="region-ap">
+          <circle class="region-node" cx="748" cy="268" r="5"/>
+          <circle class="region-pulse" cx="748" cy="268" r="4" style="animation-delay: 1.6s"/>
+        </g>
+
+        <!-- Asia Pacific (Tokyo) -->
+        <g id="region-ap-jp">
+          <circle class="region-node" cx="878" cy="130" r="5"/>
+          <circle class="region-pulse" cx="878" cy="130" r="4" style="animation-delay: 0.6s"/>
+        </g>
+
+        <!-- Asia Pacific (Hong Kong) -->
+        <g id="region-ap-hk">
+          <circle class="region-node" cx="808" cy="195" r="4"/>
+        </g>
+
+        <!-- Asia Pacific (Mumbai) -->
+        <g id="region-ap-in">
+          <circle class="region-node" cx="662" cy="220" r="4"/>
+        </g>
+
+        <!-- Asia Pacific (Seoul) -->
+        <g id="region-ap-kr">
+          <circle class="region-node" cx="845" cy="138" r="4"/>
+        </g>
+
+        <!-- Australia (Sydney) -->
+        <g id="region-au">
+          <circle class="region-node" cx="902" cy="378" r="5"/>
+          <circle class="region-pulse" cx="902" cy="378" r="4" style="animation-delay: 2.0s"/>
+        </g>
+
+        <!-- Region labels (on hover via CSS title) -->
+        <title>EdgeBench World Map — Deno Deploy Regions</title>
+      </svg>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div id="workload-btns" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+      <button class="run-btn" id="run-btn">Run Benchmark</button>
+    </div>
+
+    <!-- Results panel -->
+    <div class="results-panel">
+      <div class="results-header">
+        <span class="results-title">Results</span>
+        <span class="cold-start-badge" id="cold-start-badge">&#9889; Cold Start Detected</span>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-label">p50</div>
+          <div class="stat-value empty" id="stat-p50">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">p95</div>
+          <div class="stat-value empty" id="stat-p95">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">p99</div>
+          <div class="stat-value empty" id="stat-p99">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">min</div>
+          <div class="stat-value empty" id="stat-min">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">max</div>
+          <div class="stat-value empty" id="stat-max">—</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">mean</div>
+          <div class="stat-value empty" id="stat-mean">—</div>
+        </div>
+      </div>
+
+      <!-- Bar chart -->
+      <div class="chart-area">
+        <div class="chart-label">Request latency — 20 sequential requests</div>
+        <div id="bars-container"></div>
+        <div id="empty-state" class="empty-state">
+          <div class="icon">&#9671;</div>
+          <div>Select a workload and click <strong>Run Benchmark</strong> to start</div>
+        </div>
+      </div>
+
+      <!-- Previous runs -->
+      <div class="prev-runs-toggle" id="prev-runs-toggle">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Previous runs (last 3)
+      </div>
+      <div class="prev-runs-section" id="prev-runs-section">
+        <div id="prev-runs-list"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
