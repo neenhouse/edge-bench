@@ -23,5 +23,7 @@ edge regions.
 ## CI/CD
 
 GitHub Actions workflow at `.github/workflows/deploy.yml`:
+
 - **CI job**: Runs on all pushes and PRs to main (check, lint, fmt, test)
-- **Deploy job**: Deploys to Deno Deploy on push to main (requires `DENO_DEPLOY_TOKEN` secret)
+- **Deploy job**: Deploys to Deno Deploy on push to main (requires
+  `DENO_DEPLOY_TOKEN` secret)
