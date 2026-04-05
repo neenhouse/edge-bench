@@ -97,7 +97,7 @@ async function handleBench(workload: string): Promise<Response> {
   }
 }
 
-Deno.serve({ port: 8000 }, async (req: Request) => {
+export async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
   // CORS headers for API routes
@@ -113,7 +113,10 @@ Deno.serve({ port: 8000 }, async (req: Request) => {
 
   // Serve index
   if (url.pathname === "/" || url.pathname === "/index.html") {
-    const res = await serveFile("static/index.html", "text/html; charset=utf-8");
+    const res = await serveFile(
+      "static/index.html",
+      "text/html; charset=utf-8",
+    );
     return res;
   }
 
@@ -141,7 +144,7 @@ Deno.serve({ port: 8000 }, async (req: Request) => {
         region: Deno.env.get("DENO_REGION") || "local",
         timestamp: Date.now(),
       },
-      { headers: corsHeaders }
+      { headers: corsHeaders },
     );
   }
 
@@ -161,4 +164,12 @@ Deno.serve({ port: 8000 }, async (req: Request) => {
   }
 
   return new Response("Not Found", { status: 404 });
-});
+}
+
+// Export handleBench for direct testing
+export { handleBench };
+
+// Start server when run directly
+if (import.meta.main) {
+  Deno.serve({ port: 8000 }, handler);
+}
