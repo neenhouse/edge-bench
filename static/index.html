@@ -25,6 +25,42 @@
     />
 
     <link rel="stylesheet" href="/static/style.css" />
+      <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://edge-bench.neenhouse.com/" />
+    <meta property="og:title" content="edge-bench" />
+    <meta property="og:image" content="https://edge-bench.neenhouse.com/hero-og.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://edge-bench.neenhouse.com/hero-og.webp" />
+      <style>
+      .hero-og-banner {
+        width: 100%;
+        height: 40vh;
+        min-height: 240px;
+        max-height: 400px;
+        overflow: hidden;
+        position: relative;
+      }
+      .hero-og-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+      .hero-og-banner::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(transparent, var(--bg-primary, #0f0f13));
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body>
     <div class="app">
