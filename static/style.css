@@ -13,8 +13,8 @@
   --text: #fafafa;
   --text-muted: #71717a;
   --text-dim: #52525b;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
   --radius: 8px;
   --radius-lg: 12px;
 }
@@ -97,8 +97,12 @@ header {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 6px var(--accent-glow); }
-  50% { box-shadow: 0 0 12px var(--accent), 0 0 20px var(--accent-glow); }
+  0%, 100% {
+    box-shadow: 0 0 6px var(--accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 12px var(--accent), 0 0 20px var(--accent-glow);
+  }
 }
 
 /* ── Map section ── */
@@ -114,10 +118,14 @@ header {
 }
 
 .map-section::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 120%, rgba(20, 184, 166, 0.05) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at 50% 120%,
+    rgba(20, 184, 166, 0.05) 0%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -173,8 +181,14 @@ header {
 }
 
 @keyframes pulse-ring {
-  0% { r: 4px; stroke-opacity: 0.8; }
-  100% { r: 16px; stroke-opacity: 0; }
+  0% {
+    r: 4px;
+    stroke-opacity: 0.8;
+  }
+  100% {
+    r: 16px;
+    stroke-opacity: 0;
+  }
 }
 
 /* ── Controls ── */
@@ -242,8 +256,12 @@ header {
 }
 
 @keyframes btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(20, 184, 166, 0);
+  }
 }
 
 /* ── Results panel ── */
