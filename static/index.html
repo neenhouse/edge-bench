@@ -63,7 +63,7 @@
         left: 0;
         right: 0;
         height: 50%;
-        background: linear-gradient(transparent, var(--bg-primary, #0f0f13));
+        background: linear-gradient(transparent, var(--bg, #09090b));
         pointer-events: none;
       }
     </style>
@@ -72,10 +72,9 @@
     <div class="app">
       <!-- Header -->
       <header>
-        <div>
-          <div class="logo">Edge<span>Bench</span></div>
-          <div class="subtitle">Global Latency Observatory — Deno Deploy</div>
-        </div>
+        <div class="logo">Edge<span>Bench</span></div>
+        <div class="header-divider"></div>
+        <div class="subtitle">Global Latency Observatory — Deno Deploy</div>
         <div class="region-badge">
           <span class="region-dot"></span>
           Your region: <strong id="region-name">detecting…</strong>
