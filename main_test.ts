@@ -106,3 +106,48 @@ Deno.test("GET / serves index.html", async () => {
     assertEquals(res.status, 404);
   }
 });
+
+// ── Test: kv-read workload gracefully handles missing KV ──
+
+Deno.test("GET /api/bench/kv-read returns bench result (or simulates locally)", async () => {
+  const res = await handler(req("/api/bench/kv-read"));
+  assertEquals(res.status, 200);
+
+  const body = await res.json();
+  assertEquals(body.workload, "kv-read");
+  assertEquals(typeof body.elapsed_ms, "number");
+  assertEquals(typeof body.region, "string");
+  assertExists(body.timestamp);
+});
+
+// ── Test: kv-write workload gracefully handles missing KV ──
+
+Deno.test("GET /api/bench/kv-write returns bench result (or simulates locally)", async () => {
+  const res = await handler(req("/api/bench/kv-write"));
+  assertEquals(res.status, 200);
+
+  const body = await res.json();
+  assertEquals(body.workload, "kv-write");
+  assertEquals(typeof body.elapsed_ms, "number");
+  assertEquals(typeof body.region, "string");
+  assertExists(body.timestamp);
+});
+
+// ── Test: bench response CORS headers ──
+
+Deno.test("bench endpoint includes CORS headers", async () => {
+  const res = await handler(req("/api/bench/noop"));
+  assertEquals(res.headers.get("access-control-allow-origin"), "*");
+  assertEquals(res.headers.get("content-type"), "application/json");
+});
+
+// ── Test: static file serving ──
+
+Deno.test("GET /static/style.css serves CSS or returns 404", async () => {
+  const res = await handler(req("/static/style.css"));
+  if (res.status === 200) {
+    assertEquals(res.headers.get("content-type"), "text/css; charset=utf-8");
+  } else {
+    assertEquals(res.status, 404);
+  }
+});
